@@ -35,7 +35,7 @@ public class Main : MonoBehaviour
             
             _itemDropship.TryOpeningShip();
             
-            _itemDropship.ShipLeave();
+            _itemDropship.ShipLeaveClientRpc();
         }
     }
 
@@ -58,13 +58,15 @@ public class Main : MonoBehaviour
                 FieldInfo fieldInfo = typeof(ItemDropship).GetField("itemsToDeliver", BindingFlags.NonPublic | BindingFlags.Instance);
                 List<int> itemsToDeliver = (List<int>)fieldInfo.GetValue(__instance);
                 
-                int num = 0;
                 for (int i = 0; i < itemsToDeliver.Count; i++)
                 {
                     GameObject obj = Instantiate(_terminal.buyableItemsList[itemsToDeliver[i]].spawnPrefab, GetItemDropLocation(), Quaternion.identity, StartOfRound.Instance.elevatorTransform);
-                    obj.GetComponent<GrabbableObject>().fallTime = 0f;
+                    obj.GetComponent<GrabbableObject>().fallTime = 1f;
+                    obj.GetComponent<GrabbableObject>().isInFactory = false;
+                    obj.GetComponent<GrabbableObject>().isInShipRoom = true;
+                    obj.GetComponent<GrabbableObject>().isInElevator = true;
                     obj.GetComponent<NetworkObject>().Spawn();
-                    num = ((num < 3) ? (num + 1) : 0);
+
                 }
                 itemsToDeliver.Clear();
                 __instance.OpenShipClientRpc();
