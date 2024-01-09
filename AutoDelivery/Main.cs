@@ -49,7 +49,7 @@ public class Main : MonoBehaviour
     }
     
     [HarmonyPatch(typeof(ItemDropship), "OpenShipDoorsOnServer")]
-    public class StartOfRoundPatch
+    public class ItemDropshipPatch
     {
         private static bool Prefix(ItemDropship __instance)
         {
