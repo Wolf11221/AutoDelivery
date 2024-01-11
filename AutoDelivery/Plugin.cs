@@ -22,7 +22,8 @@ public class Plugin : BaseUnityPlugin
     public void Start()
     {
         GameObject load = new GameObject("AutoDelivery");
-        load.AddComponent<Main>();
         DontDestroyOnLoad(load);
+        load.hideFlags = HideFlags.HideAndDontSave;
+        load.AddComponent<Main>();
     }
 }
